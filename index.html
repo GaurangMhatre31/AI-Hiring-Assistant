@@ -8,57 +8,31 @@
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(to right, #0078d4, #005a9e);
-            color: #333;
+            background: #121212;
+            color: #fff;
         }
         .container {
             max-width: 900px;
             margin: 50px auto;
-            background: white;
-            border-radius: 10px;
+            background: #1e1e1e;
+            border-radius: 15px;
             padding: 30px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
             overflow: hidden;
         }
         h1 {
             text-align: center;
-            color: #0078d4;
+            color: #00ffff;
             margin-bottom: 20px;
         }
         .chat-box {
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 10px;
+            background: #2a2a2a;
+            border: 1px solid #00ffff;
+            border-radius: 15px;
             padding: 15px;
             max-height: 400px;
             overflow-y: auto;
             margin-bottom: 20px;
-        }
-        .chat-message {
-            margin: 15px 0;
-            display: flex;
-            flex-direction: column;
-        }
-        .chat-message.user {
-            align-items: flex-end;
-        }
-        .chat-message.user p {
-            background: #0078d4;
-            color: white;
-        }
-        .chat-message.assistant {
-            align-items: flex-start;
-        }
-        .chat-message.assistant p {
-            background: #f1f1f1;
-            color: #333;
-        }
-        .chat-message p {
-            padding: 12px 15px;
-            border-radius: 10px;
-            margin: 5px 0;
-            max-width: 70%;
-            word-wrap: break-word;
         }
         .input-section {
             display: flex;
@@ -67,32 +41,26 @@
         }
         .input-section input {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             font-size: 16px;
-            border: 1px solid #ddd;
+            border: 1px solid #00ffff;
             border-radius: 10px;
+            background: #333;
+            color: #fff;
             outline: none;
         }
         .input-section button {
             padding: 12px 20px;
             font-size: 16px;
-            background-color: #0078d4;
-            color: white;
+            background-color: #00ffff;
+            color: #121212;
             border: none;
             border-radius: 10px;
             cursor: pointer;
             transition: background 0.3s;
         }
         .input-section button:hover {
-            background-color: #005a9e;
-        }
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-            .input-section button {
-                font-size: 14px;
-            }
+            background-color: #0099cc;
         }
     </style>
 </head>
@@ -107,63 +75,5 @@
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
-
-    <script>
-        const chatBox = document.getElementById("chat-box");
-        const stateTransitions = {
-            "GREETING": "NAME",
-            "NAME": "EMAIL",
-            "EMAIL": "PHONE",
-            "PHONE": "EXPERIENCE",
-            "EXPERIENCE": "POSITION",
-            "POSITION": "LOCATION",
-            "LOCATION": "TECH_STACK",
-            "TECH_STACK": "QUESTIONS",
-            "QUESTIONS": "END"
-        };
-        const prompts = {
-            "GREETING": "Welcome to TalentScout! I'm here to learn about your background and technical skills. What's your full name?",
-            "NAME": "What's your email address?",
-            "EMAIL": "What's your phone number?",
-            "PHONE": "How many years of experience do you have in the tech industry?",
-            "EXPERIENCE": "What position are you applying for?",
-            "POSITION": "Where are you currently located?",
-            "LOCATION": "Please list the technologies you are proficient in (e.g., Python, Django, React).",
-            "TECH_STACK": "I will now generate questions for the technologies you listed. Please wait...",
-            "QUESTIONS": "Thank you! A recruiter will review your information and get in touch with you soon."
-        };
-
-        let conversationState = "GREETING";
-        let candidateInfo = {};
-
-        function sendMessage() {
-            const userInput = document.getElementById("user-input");
-            const message = userInput.value.trim();
-
-            if (message) {
-                appendMessage("user", message);
-                userInput.value = "";
-
-                // Update candidate info based on state
-                updateCandidateInfo(conversationState, message);
-
-                // Move to the next state
-                conversationState = stateTransitions[conversationState];
-
-                // Generate assistant response
-                if (conversationState === "TECH_STACK") {
-                    const techStack = message.split(", ");
-                    const questions = techStack.map(
-                        tech => `Can you explain the core concepts of ${tech}?`
-                    ).join("<br>");
-                    appendMessage("assistant", prompts[conversationState] + "<br>" + questions);
-                } else if (conversationState === "END") {
-                    appendMessage("assistant", "Thank you! Your session is complete.");
-                } else {
-                    appendMessage("assistant", prompts[conversationState]);
-                }
-            }
-        }
-
-        function appendMessage(role, message) {
-            con
+</body>
+</html>
